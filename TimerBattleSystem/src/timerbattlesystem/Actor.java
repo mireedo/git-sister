@@ -5,6 +5,8 @@
  */
 package timerbattlesystem;
 
+import java.util.Random;
+
 /**
  *
  * @author kundaime
@@ -16,54 +18,66 @@ public class Actor
 	protected int maxHp;
 	protected int minDmg;
 	protected int maxDmg;
+        protected boolean status;
 	
 	public Actor(String n)
 	{
 		this.name= n;
-		this.maxHp= 100;
+		this.maxHp= 200;
                 this.hp=this.maxHp;
 		this.minDmg= 5;
 		this.maxDmg= 20;
+                this.status = true;
 	}
 	
+        public boolean getStat()
+        {
+            return status;
+        }
+        
+        public void setStat(boolean stat)
+        {
+            this.status = stat;
+        }
+        
 	public void setName(String name)
 	{
-		this.name= name;
+            this.name= name;
 	}
 	
 	public String getName()
 	{
-		return name;
+            return name;
 	}
 	
 	public void setHp(int Hp)
 	{
-		hp= Math.min(maxHp, Math.max(Hp, 0));
+            hp= Math.min(maxHp, Math.max(Hp, 0));
 	}
 	
 	public int getHp()
 	{
-		return hp;
+            return hp;
 	}
 	
 	public void setMaxHP(int Hp)
 	{
-		maxHp= Hp;
+            maxHp= Hp;
 	}
 	
 	public int getMaxHp()
 	{
-		return maxHp;
-	}
-	
-	public void attacked(int attack)
-	{
-		hp= hp-attack;	
+            return maxHp;
 	}
 	
 	public int attack()
 	{
-		return minDmg;
+                Random rn = new Random();
+		return rn.nextInt(maxDmg - minDmg + 1) + minDmg;
 	}
+        
+        public boolean isAlive(){
+            return hp > 0;
+        }
 		
 }
