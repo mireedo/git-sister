@@ -28,34 +28,28 @@ public class MonsterThread extends Thread {
     
     public void MonsterAct (Actor player, Actor monster)
     {
-        while(monster.isAlive()){
             player.hp = player.hp - monster.attack();
             System.out.println(player.getName() + " is attacked!");
             System.out.println("HP : " +player.getHp());
-        }
+       
     }
     
     @Override
     public void run()
     {
         try{
-           while (this.monster.timer != 10){
-               this.monster.timer++;
-            }
-           MonsterAct(this.player, this.monster);
-           Thread.sleep(50);
+            while (this.monster.isAlive() && this.player.isAlive()){
+                while (this.monster.timer != 10){
+                    this.monster.timer++;
+                }
+                MonsterAct(this.player, this.monster);
+                Thread.sleep(100);
+           }
+            if (!this.player.isAlive())
+                System.out.println("Game over!");
         }
         catch (InterruptedException e1){
             System.out.println("Interrupted!");
-        }
-    }
-    
-    @Override
-    public void start(){
-        if (t == null)
-        {
-            t = new Thread (this.t, threadName);
-            t.start();
         }
     }
 

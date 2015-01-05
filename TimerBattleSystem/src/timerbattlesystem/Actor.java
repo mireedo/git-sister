@@ -18,7 +18,6 @@ public class Actor
 	protected int maxHp;
 	protected int minDmg;
 	protected int maxDmg;
-        protected boolean status;
         public int timer;
 	
 	public Actor(String n)

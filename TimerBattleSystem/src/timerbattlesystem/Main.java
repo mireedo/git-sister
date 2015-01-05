@@ -18,7 +18,9 @@ public class Main {
         // TODO code application logic here
         System.out.println("Mulai");
         Actor hero1 = new Actor ("Hero-1");
+        System.out.println("Player" +hero1.name+" is created.");
         Actor monster = new Actor ("Monster");
+        System.out.println("Player "+monster.name+" is created.");
         
         PlayerThread P1 = new PlayerThread ("Th1", hero1, monster);
         P1.start();
