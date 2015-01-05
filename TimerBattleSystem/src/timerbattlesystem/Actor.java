@@ -19,6 +19,7 @@ public class Actor
 	protected int minDmg;
 	protected int maxDmg;
         protected boolean status;
+        public int timer;
 	
 	public Actor(String n)
 	{
@@ -28,6 +29,7 @@ public class Actor
 		this.minDmg= 5;
 		this.maxDmg= 20;
                 this.status = true;
+                this.timer = 0;
 	}
 	
         public boolean getStat()
