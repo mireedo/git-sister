@@ -16,6 +16,15 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        System.out.println("Mulai");
+        Actor hero1 = new Actor ("Hero-1");
+        Actor monster = new Actor ("Monster");
+        
+        PlayerThread P1 = new PlayerThread ("Th1", hero1, monster);
+        P1.start();
+        
+        MonsterThread P2 = new MonsterThread ("Th2", hero1, monster);
+        P2.start();
     }
     
 }

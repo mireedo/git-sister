@@ -28,19 +28,8 @@ public class Actor
                 this.hp=this.maxHp;
 		this.minDmg= 5;
 		this.maxDmg= 20;
-                this.status = true;
                 this.timer = 0;
 	}
-	
-        public boolean getStat()
-        {
-            return status;
-        }
-        
-        public void setStat(boolean stat)
-        {
-            this.status = stat;
-        }
         
 	public void setName(String name)
 	{

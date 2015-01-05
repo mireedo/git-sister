@@ -13,41 +13,17 @@ import java.io.InputStreamReader;
  *
  * @author Mira
  */
-public class MultiThread {
+public class PlayerThread extends Thread {
     private Thread t;
     private String threadName;
+    private Actor player;
+    private Actor monster;
     
-    MultiThread( String name)
+    PlayerThread (String name, Actor p, Actor m)
     {
         this.threadName = name;
-    }
-    
-    public void start()
-    {
-        if (t == null)
-        {
-            t = new Thread ((Runnable) this, threadName);
-            t.start();
-        }
-    }
-    
-    public int timer (Actor player)
-    {
-        return player.timer++;
-    }
-    
-    public void battle(Actor player, Actor monster)
-    {
-        
-    }
-    
-    public void MonsterAct (Actor player, Actor monster)
-    {
-        while(monster.isAlive()){
-            player.hp = player.hp - monster.attack();
-            System.out.println(player.getName() + " is attacked!");
-            System.out.println("HP : " +player.getHp());
-        }
+        this.player = p;
+        this.monster = m;
     }
     
     public void PlayerAct (Actor player, Actor monster) throws IOException
@@ -61,6 +37,34 @@ public class MultiThread {
                 monster.hp = monster.hp - attack;
                 System.out.print("Your damamge : "+attack);
             }
+        }
+    }
+    
+    @Override
+    public void run()
+    {
+        try{
+           while (this.player.timer != 10){
+               System.out.println("Wait for "+this.player.timer +"s..");
+               this.player.timer++;
+           }
+           PlayerAct(this.player, this.monster);
+           Thread.sleep(50);
+        }
+        catch (IOException e){
+            System.out.println("IOException!");
+        }
+        catch (InterruptedException e1){
+            System.out.println("Interrupted!");
+        }
+    }
+    
+    @Override
+    public void start(){
+        if (t == null)
+        {
+            t = new Thread (this.t, threadName);
+            t.start();
         }
     }
 }
