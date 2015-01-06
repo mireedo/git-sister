@@ -8,6 +8,7 @@ package timerbattlesystem;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.locks.Lock;
 
 /**
  *
@@ -18,12 +19,14 @@ public class PlayerThread extends Thread {
     private String threadName;
     private Actor player;
     private Actor monster;
+    private Lock lock;
     
-    PlayerThread (String name, Actor p, Actor m)
+    PlayerThread (String name, Actor p, Actor m, Lock lock)
     {
         this.threadName = name;
         this.player = p;
         this.monster = m;
+        this.lock = lock;
     }
     
     public void PlayerAct (Actor player, Actor monster) throws IOException
@@ -33,7 +36,12 @@ public class PlayerThread extends Thread {
             String action = in.readLine();
             if (action.equals("z") || action.equals("Z")){
                 int attack=player.attack();
+                lock.lock();
+            try {
                 monster.hp = monster.hp - attack;
+            } finally {
+                lock.unlock();
+            }
                 System.out.println(player.name+"'s damage : "+attack);
             }
             if (monster.isAlive()){

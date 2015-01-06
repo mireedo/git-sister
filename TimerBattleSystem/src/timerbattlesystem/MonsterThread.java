@@ -8,6 +8,7 @@ package timerbattlesystem;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.locks.Lock;
 
 /**
  *
@@ -18,12 +19,14 @@ public class MonsterThread extends Thread {
     private String threadName;
     private Actor player;
     private Actor monster;
+    private Lock lock;
     
     MonsterThread (String name, Actor p, Actor m)
     {
         this.threadName = name;
         this.player = p;
         this.monster = m;
+        //this.lock = lock;
     }
     
     public void MonsterAct (Actor player, Actor monster)
