@@ -29,27 +29,34 @@ public class PlayerThread extends Thread {
     public void PlayerAct (Actor player, Actor monster) throws IOException
     {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Attack! (Z)");
+            System.out.println(player.name+" is READY to attack! (z)");
             String action = in.readLine();
             if (action.equals("z") || action.equals("Z")){
                 int attack=player.attack();
                 monster.hp = monster.hp - attack;
-                System.out.print("Your damamge : "+attack);
-        }
+                System.out.println(player.name+"'s damage : "+attack);
+            }
+            if (monster.isAlive()){
+                    System.out.println("Monster is still alive!");
+                    System.out.println("MONSTER's HP : "+monster.getHp());
+            }                   
+            player.timer = 0;
     }
     
     @Override
     public void run()
     {
         try{
-           while (this.player.isAlive()){
+           while (this.player.isAlive() && this.monster.isAlive()){
                 while (this.player.timer != 10){
-                    System.out.println("Wait for "+this.player.timer +"s..");
+                    System.out.println(this.player.name+"wait for "+(10 - this.player.timer) +"s..");
                     this.player.timer++;
+                    Thread.sleep(900);
                 }
                 PlayerAct(this.player, this.monster);
-                Thread.sleep(100);
            }
+           if (!this.monster.isAlive())
+               System.out.println(this.player.name+" defeated the monster!");
         }
         catch (IOException e){
             System.out.println("IOException!");

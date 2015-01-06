@@ -31,6 +31,7 @@ public class MonsterThread extends Thread {
             player.hp = player.hp - monster.attack();
             System.out.println(player.getName() + " is attacked!");
             System.out.println("HP : " +player.getHp());
+            this.monster.timer = 0;
        
     }
     
@@ -41,6 +42,7 @@ public class MonsterThread extends Thread {
             while (this.monster.isAlive() && this.player.isAlive()){
                 while (this.monster.timer != 10){
                     this.monster.timer++;
+                    Thread.sleep(900);
                 }
                 MonsterAct(this.player, this.monster);
                 Thread.sleep(100);

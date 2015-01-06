@@ -25,8 +25,8 @@ public class Actor
 		this.name= n;
 		this.maxHp= 200;
                 this.hp=this.maxHp;
-		this.minDmg= 5;
-		this.maxDmg= 20;
+		this.minDmg= 10;
+		this.maxDmg= 50;
                 this.timer = 0;
 	}
         
