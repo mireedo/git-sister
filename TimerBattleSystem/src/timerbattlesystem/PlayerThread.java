@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.awt.event.KeyEvent;
+import java.sql.Timestamp;
+import java.util.Date;
 
 //import java.util.concurrent.locks.Lock;
 
@@ -32,14 +34,17 @@ public class PlayerThread extends Thread {
     public void PlayerAct (Actor player, Actor monster) throws IOException
     {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        Date date = new Date();
             System.out.println(player.name+" is READY to attack! (z)");
             String action = in.readLine();
+            System.out.println(player.name+"'s action received at "+new Timestamp(date.getTime()));
             if (action.equals("z") || action.equals("Z")){
                 int attack=player.attack();
                
                 synchronized(this) {
                 monster.hp = monster.hp - attack; 
                 }
+                
                 System.out.println(player.name+"'s damage : "+attack);
             }
             if (monster.isAlive()){
