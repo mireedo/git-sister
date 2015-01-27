@@ -44,8 +44,13 @@ public class PlayerThread extends Thread {
                 synchronized(this) {
                 monster.hp = monster.hp - attack; 
                 }
-                
                 System.out.println(player.name+"'s damage : "+attack);
+            }
+            else if(action.equals("x") || action.equals("X")){
+                synchronized(this){
+                    player.heal(player);
+                }
+                System.out.println(player.name+"heals. HP: "+player.hp);
             }
             if (monster.isAlive()){
                     System.out.println("Monster is still alive!");
