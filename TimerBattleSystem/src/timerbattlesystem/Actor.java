@@ -66,6 +66,11 @@ public class Actor
 		return rn.nextInt(maxDmg - minDmg + 1) + minDmg;
 	}
         
+        public void heal(Actor X)
+        {
+            X.hp = X.hp + 10;
+        }
+        
         public boolean isAlive(){
             return hp > 0;
         }

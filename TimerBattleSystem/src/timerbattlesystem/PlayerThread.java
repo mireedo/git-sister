@@ -8,7 +8,9 @@ package timerbattlesystem;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.concurrent.locks.Lock;
+import java.awt.event.KeyEvent;
+
+//import java.util.concurrent.locks.Lock;
 
 /**
  *
@@ -27,10 +29,6 @@ public class PlayerThread extends Thread {
         this.monster = m;
     }
     
-    public static synchronized void subtract(int hp, int attack){
-      hp -= attack;
-  }
-    
     public void PlayerAct (Actor player, Actor monster) throws IOException
     {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -38,11 +36,10 @@ public class PlayerThread extends Thread {
             String action = in.readLine();
             if (action.equals("z") || action.equals("Z")){
                 int attack=player.attack();
-                
-                
-                subtract(monster.hp, attack);
-              
-                
+               
+                synchronized(this) {
+                monster.hp = monster.hp - attack; 
+                }
                 System.out.println(player.name+"'s damage : "+attack);
             }
             if (monster.isAlive()){
@@ -73,5 +70,9 @@ public class PlayerThread extends Thread {
         catch (InterruptedException e1){
             System.out.println("Interrupted!");
         }
+    }
+    
+    public int keyPressed(KeyEvent e){
+        return e.getKeyCode();
     }
 }
