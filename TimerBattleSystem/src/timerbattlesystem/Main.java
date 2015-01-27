@@ -27,10 +27,10 @@ public class Main {
         Actor monster = new Actor ("Monster");
         System.out.println("Player "+monster.name+" is created.");
         
-        PlayerThread P1 = new PlayerThread ("Player1", hero1, monster, lock);
+        PlayerThread P1 = new PlayerThread ("Player1", hero1, monster);
         P1.start();
         
-        PlayerThread P2 = new PlayerThread ("Player2", hero2, monster, lock);
+        PlayerThread P2 = new PlayerThread ("Player2", hero2, monster);
         P2.start();
         
         MonsterThread P3 = new MonsterThread ("Th2", hero1, monster);
