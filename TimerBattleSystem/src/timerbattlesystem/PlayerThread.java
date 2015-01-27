@@ -27,6 +27,10 @@ public class PlayerThread extends Thread {
         this.monster = m;
     }
     
+    public static synchronized void subtract(int hp, int attack){
+      hp -= attack;
+  }
+    
     public void PlayerAct (Actor player, Actor monster) throws IOException
     {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -35,10 +39,10 @@ public class PlayerThread extends Thread {
             if (action.equals("z") || action.equals("Z")){
                 int attack=player.attack();
                 
-                synchronized (this)
-                {
-                monster.hp = monster.hp - attack;
-                }
+                
+                subtract(monster.hp, attack);
+              
+                
                 System.out.println(player.name+"'s damage : "+attack);
             }
             if (monster.isAlive()){
