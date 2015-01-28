@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.awt.event.KeyEvent;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.Lock;
 
 //import java.util.concurrent.locks.Lock;
 
@@ -23,12 +25,14 @@ public class PlayerThread extends Thread {
     private String threadName;
     private Actor player;
     private Actor monster;
+    private Lock lock;
     
     PlayerThread (String name, Actor p, Actor m)
     {
         this.threadName = name;
         this.player = p;
         this.monster = m;
+        this.lock = new ReentrantLock();
     }
     
     public void PlayerAct (Actor player, Actor monster) throws IOException
@@ -41,15 +45,22 @@ public class PlayerThread extends Thread {
             if (action.equals("z") || action.equals("Z")){
                 int attack=player.attack();
                
-                synchronized(this) {
-                monster.hp = monster.hp - attack; 
-                }
+                lock.lock();
+            try {
+                monster.hp -= attack;
+            } finally {
+                lock.unlock();
+            }
+                
                 System.out.println(player.name+"'s damage : "+attack);
             }
             else if(action.equals("x") || action.equals("X")){
-                synchronized(this){
-                    player.heal(player);
-                }
+                lock.lock();
+            try {
+                player.heal(player);
+            } finally {
+                lock.unlock();
+            }
                 System.out.println(player.name+"heals. HP: "+player.hp);
             }
             if (monster.isAlive()){
